@@ -3,6 +3,8 @@ package com.task;
 import java.util.Scanner;
 
 public class Main {
+
+
     private static final String PREFIX = "task-cli";
 
     public static void main(String[] args) {

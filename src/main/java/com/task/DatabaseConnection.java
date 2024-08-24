@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 
 public class DatabaseConnection {
-    static String URL = "jdbc:mysql://localhost:3306/tasks";
-    static String USER = "root";
-    static String PASSWORD = "password";
+    static String URL = System.getenv("DB_URL");
+    static String USER = System.getenv("DB_USER");
+    static String PASSWORD = System.getenv("DB_PASSWORD");
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
