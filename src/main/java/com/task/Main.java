@@ -1,5 +1,7 @@
 package com.task;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,9 +9,14 @@ public class Main {
 
     private static final String PREFIX = "task-cli";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         Command cc = new Command();
+        try (FileWriter file = new FileWriter("task.json")) {
+            file.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("Digite --help para saber os comandos");
 
