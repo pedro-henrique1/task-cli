@@ -40,6 +40,8 @@ public class Main {
                 case "update":
                     cc.update(input);
                     break;
+                case "delete":
+                    cc.delete(input);
 
             }
         }

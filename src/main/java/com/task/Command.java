@@ -30,6 +30,14 @@ public class Command {
 
     }
 
+    public void delete(String scanner) {
+        String prefix = "delete";
+        String id = scanner.substring(prefix.length()).trim();
+        taskDelete delete = new taskDelete();
+        delete.deleteTask(Integer.parseInt(id));
+
+    }
+
 
 }
 
