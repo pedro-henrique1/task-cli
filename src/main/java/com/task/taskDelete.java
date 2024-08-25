@@ -25,8 +25,6 @@ public class taskDelete {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println("Linha com ID " + id + " deletada com sucesso!");
     }
 
 
@@ -55,5 +53,8 @@ public class taskDelete {
 
         return jsonString;
     }
+
+
+
 
 }

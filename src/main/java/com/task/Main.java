@@ -42,7 +42,16 @@ public class Main {
                     break;
                 case "delete":
                     cc.delete(input);
-
+                    break;
+                case "mark-in-progress":
+                    cc.updateTaskProgress(input);
+                    break;
+                case "mark-done":
+                    cc.updateTaskProgressDone(input);
+                    break;
+                case "list":
+                    cc.TaskList();
+                    break;
             }
         }
 

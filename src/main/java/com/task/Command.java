@@ -1,5 +1,8 @@
 package com.task;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +12,7 @@ public class Command {
         String prefix = "add";
         String textFormat = scanner.substring(prefix.length()).trim();
         try {
-            Task task = new Task(textFormat, Task.TaskStatus.IN_PROGRESS);
+            Task task = new Task(textFormat, Task.TaskStatus.TODO);
             task.saveToJsonFile("task.json", task);
             System.out.println("Tarefa salva em task.json" + task);
         } catch (Exception e) {
@@ -33,11 +36,54 @@ public class Command {
     public void delete(String scanner) {
         String prefix = "delete";
         String id = scanner.substring(prefix.length()).trim();
+
         taskDelete delete = new taskDelete();
         delete.deleteTask(Integer.parseInt(id));
 
     }
 
 
+    public void updateTaskProgress(String scanner) {
+        String regex = "(\\w+-\\w+)\\s(\\d+)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(scanner);
+        if (matcher.find()) {
+            String status = matcher.group(1);  // "in-progress"
+            int number = Integer.parseInt(matcher.group(2));  // 1
+
+            ProgressTask task = new ProgressTask();
+            task.inProgress(status, String.valueOf(number));
+            // Exibir os resultados
+        }
+    }
+
+    public void updateTaskProgressDone(String scanner) {
+        String regex = "(\\w+-\\w+)\\s(\\d+)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(scanner);
+        if (matcher.find()) {
+            String status = matcher.group(1);  // "in-progress"
+            int number = Integer.parseInt(matcher.group(2));  // 1
+
+            ProgressTask task = new ProgressTask();
+            task.inProgressDone(status, String.valueOf(number));
+            // Exibir os resultados
+        }
+    }
+
+    public  void TaskList() {
+        StringBuilder jsonContent = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader("task.json"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonContent.append(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        String jsonString = jsonContent.toString();
+        System.out.println(jsonString);
+    }
 }
 
