@@ -3,6 +3,8 @@ package com.task;
 import java.io.*;
 
 public class ReadJson {
+    String filePath = "task.json";
+
     public String ReadToJson() {
 
         StringBuilder jsonContent = new StringBuilder();
@@ -15,10 +17,18 @@ public class ReadJson {
             throw new RuntimeException(e);
         }
 
-        String jsonString = jsonContent.toString();
-        System.out.println(jsonString);
-        return jsonString;
+        return jsonContent.toString();
     }
+
+    public void SaveToJson(String jsonString) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(jsonString);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }
 
 
