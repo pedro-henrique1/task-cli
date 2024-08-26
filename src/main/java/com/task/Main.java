@@ -2,20 +2,19 @@ package com.task;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     private static final String PREFIX = "task-cli";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Command cc = new Command();
         ListTask listTask = new ListTask();
         try (FileWriter file = new FileWriter("task.json")) {
             file.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         System.out.println("Digite --help para saber os comandos");
@@ -49,9 +48,9 @@ public class Main {
                 case "mark-done":
                     cc.updateTaskProgressDone(input);
                     break;
-//                case "list":
-//                    cc.TaskList();
-//                    break;
+                case "list":
+                    cc.TaskList();
+                    break;
                 case "list-done":
                     listTask.listDone(Task.TaskStatus.DONE);
                     break;
@@ -61,6 +60,8 @@ public class Main {
                 case "list-in-progress":
                     listTask.listDone(Task.TaskStatus.IN_PROGRESS);
                     break;
+                default:
+                    help();
             }
         }
 

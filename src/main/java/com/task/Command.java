@@ -1,8 +1,5 @@
 package com.task;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,10 +8,12 @@ public class Command {
     public void add(String scanner) {
         String prefix = "add";
         String textFormat = scanner.substring(prefix.length()).trim();
+        if (textFormat.isEmpty()) {
+            System.out.println("Digite a descrição da tarefa");
+        }
         try {
             Task task = new Task(textFormat, Task.TaskStatus.TODO);
             task.saveToJsonFile("task.json", task);
-            System.out.println("Task added successfully" + task);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +27,7 @@ public class Command {
         if (matcher.find()) {
             int id = Integer.parseInt(matcher.group());
             Task task = new Task();
-            task.updateDescription(descritption, id);
+            task.updateDescription(descritption, String.valueOf(id));
         }
 
     }
@@ -36,7 +35,6 @@ public class Command {
     public void delete(String scanner) {
         String prefix = "delete";
         String id = scanner.substring(prefix.length()).trim();
-
         taskDelete delete = new taskDelete();
         delete.deleteTask(Integer.parseInt(id));
 
@@ -47,12 +45,10 @@ public class Command {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(scanner);
         if (matcher.find()) {
-            String status = matcher.group(1);  // "in-progress"
             int number = Integer.parseInt(matcher.group(2));  // 1
 
             ProgressTask task = new ProgressTask();
-            task.inProgress(status, String.valueOf(number));
-            // Exibir os resultados
+            task.inProgress(String.valueOf(number));
         }
     }
 
@@ -70,7 +66,7 @@ public class Command {
 
     public void TaskList() {
         ReadJson readJson = new ReadJson();
-        readJson.ReadToJson();
+        System.out.println(readJson.ReadToJson());
     }
 }
 

@@ -15,6 +15,9 @@ public class Task {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
+    ReadJson readJson = new ReadJson();
+    ProgressTask progressTask = new ProgressTask();
+
     public Task(String description, TaskStatus status) {
         this.id = ID_GENERATOR.getAndIncrement();
         this.description = description;
@@ -68,7 +71,7 @@ public class Task {
                 }
             }
             writer.write("\n]");
-            System.out.println("Tarefa adicionada ao arquivo " + filePath + getId());
+            System.out.println("Task added successfully (ID:" + getId() + ")");
         } catch (IOException e) {
             System.err.println("Erro ao salvar a tarefa no arquivo: " + e.getMessage());
         }
@@ -83,33 +86,10 @@ public class Task {
         TODO, IN_PROGRESS, DONE
     }
 
-    public void updateDescription(String newDescription, int id) {
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader("task.json"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        String jsonString = content.toString();
-
-        jsonString = updateJsonContent(jsonString, newDescription);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("task.json"))) {
-            writer.write(jsonString);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static String updateJsonContent(String jsonString, String newDescription) {
-        // Atualiza todas as ocorrências da descrição e o updated_at
-        jsonString = jsonString.replaceAll("\"description\":\\s*\"[^\"]*\"", "\"description\": \"" + newDescription + "\"");
-        String updatedAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
-        jsonString = jsonString.replaceAll("\"updatedAt\":\\s*\"[^\"]*\"", "\"updatedAt\": \"" + updatedAt + "\"");
-
-        return jsonString;
+    public void updateDescription(String newDescription, String id) {
+        String jsonString = readJson.ReadToJson();
+        jsonString = progressTask.updateByField(id, jsonString, newDescription, "description");
+        readJson.SaveToJson(jsonString);
     }
 
 
