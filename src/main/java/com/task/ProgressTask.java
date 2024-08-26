@@ -38,8 +38,6 @@ public class ProgressTask {
             return jsonString;
         }
 
-
-        System.out.println("entrei aqui");
         jsonString = jsonString.replaceFirst("(?s)(\"id\": " + id + "[^}]*?\"status\":\\s*\")[^\"]*(\")", "$1" + Task.TaskStatus.IN_PROGRESS + "$2");
 
         String updatedAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);
@@ -49,7 +47,7 @@ public class ProgressTask {
     }
 
 
-    public void inProgressDone(String status, String id) {
+    public void inProgressDone( String id) {
         String filePath = "task.json";
         StringBuilder jsonContent = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -81,8 +79,6 @@ public class ProgressTask {
             return jsonString;
         }
 
-
-        System.out.println("entrei aqui");
         jsonString = jsonString.replaceFirst("(?s)(\"id\": " + id + "[^}]*?\"status\":\\s*\")[^\"]*(\")", "$1" + Task.TaskStatus.DONE + "$2");
 
         String updatedAt = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME);

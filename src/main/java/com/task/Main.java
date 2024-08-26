@@ -2,16 +2,16 @@ package com.task;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
-
     private static final String PREFIX = "task-cli";
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         Command cc = new Command();
+        ListTask listTask = new ListTask();
         try (FileWriter file = new FileWriter("task.json")) {
             file.flush();
         } catch (IOException e) {
@@ -49,8 +49,17 @@ public class Main {
                 case "mark-done":
                     cc.updateTaskProgressDone(input);
                     break;
-                case "list":
-                    cc.TaskList();
+//                case "list":
+//                    cc.TaskList();
+//                    break;
+                case "list-done":
+                    listTask.listDone(Task.TaskStatus.DONE);
+                    break;
+                case "list-todo":
+                    listTask.listDone(Task.TaskStatus.TODO);
+                    break;
+                case "list-in-progress":
+                    listTask.listDone(Task.TaskStatus.IN_PROGRESS);
                     break;
             }
         }

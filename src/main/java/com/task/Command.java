@@ -14,7 +14,7 @@ public class Command {
         try {
             Task task = new Task(textFormat, Task.TaskStatus.TODO);
             task.saveToJsonFile("task.json", task);
-            System.out.println("Tarefa salva em task.json" + task);
+            System.out.println("Task added successfully" + task);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -42,7 +42,6 @@ public class Command {
 
     }
 
-
     public void updateTaskProgress(String scanner) {
         String regex = "(\\w+-\\w+)\\s(\\d+)";
         Pattern pattern = Pattern.compile(regex);
@@ -62,28 +61,16 @@ public class Command {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(scanner);
         if (matcher.find()) {
-            String status = matcher.group(1);  // "in-progress"
             int number = Integer.parseInt(matcher.group(2));  // 1
 
             ProgressTask task = new ProgressTask();
-            task.inProgressDone(status, String.valueOf(number));
-            // Exibir os resultados
+            task.inProgressDone(String.valueOf(number));
         }
     }
 
-    public  void TaskList() {
-        StringBuilder jsonContent = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader("task.json"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                jsonContent.append(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        String jsonString = jsonContent.toString();
-        System.out.println(jsonString);
+    public void TaskList() {
+        ReadJson readJson = new ReadJson();
+        readJson.ReadToJson();
     }
 }
 
