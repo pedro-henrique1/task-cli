@@ -10,12 +10,13 @@ public class Command {
         String textFormat = scanner.substring(prefix.length()).trim();
         if (textFormat.isEmpty()) {
             System.out.println("Digite a descrição da tarefa");
-        }
-        try {
-            Task task = new Task(textFormat, Task.TaskStatus.TODO);
-            task.saveToJsonFile("task.json", task);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } else {
+            try {
+                Task task = new Task(textFormat, Task.TaskStatus.TODO);
+                task.saveToJsonFile("task.json", task);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
