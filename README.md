@@ -80,13 +80,13 @@ task-cli mark-done 1
 task-cli list
 
 # Listar todas as task com status 'feito'
-task-cli list done
+task-cli list-done
 
 # Listar todas as task com status 'todo'
-task-cli list todo
+task-cli list-todo
 
 # Listar todas as task com status 'em progresso'
-task-cli list in-progress
+task-cli list-in-progress
 
 
 ```
